@@ -1,0 +1,11 @@
+build/
+cmake-build-*/
+.vscode/
+.DS_Store
+highscore
+highscore.txt
+*.user
+*.o
+*.obj
+*.exe
+*.dll
