@@ -28,14 +28,3 @@ target_link_libraries(AstroDrift
         SFML::System
         SFML::Audio
 )
-
-if(WIN32)
-    add_custom_command(
-        TARGET AstroDrift
-        COMMENT "Copy OpenAL DLL"
-        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:SFML::OpenAL>
-        $<TARGET_FILE_DIR:AstroDrift>
-        VERBATIM
-    )
-endif()
