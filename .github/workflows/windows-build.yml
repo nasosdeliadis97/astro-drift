@@ -7,27 +7,30 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure CMake
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 
       - name: Build Release
-        run: cmake --build build --config Release
+        run: cmake --build build
 
       - name: Package game
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force dist/AstroDrift | Out-Null
-          Copy-Item build/Release/AstroDrift.exe dist/AstroDrift/
+          Copy-Item build/AstroDrift.exe dist/AstroDrift/
           Copy-Item assets dist/AstroDrift/assets -Recurse
 
-          if (Test-Path build/Release/openal32.dll) {
-            Copy-Item build/Release/openal32.dll dist/AstroDrift/
+          if (Test-Path build/openal32.dll) {
+            Copy-Item build/openal32.dll dist/AstroDrift/
           }
 
           Compress-Archive -Path dist/AstroDrift -DestinationPath dist/AstroDrift_Windows.zip -Force
