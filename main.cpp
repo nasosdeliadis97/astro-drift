@@ -729,16 +729,16 @@ int main() {
 
     sf::Font font;
 
-    if (!font.openFromFile("/System/Library/Fonts/Supplemental/Arial.ttf")) {
-        if (!font.openFromFile("/System/Library/Fonts/SFNS.ttf")) {
+    if (!font.openFromFile("assets/orbitron.ttf")) {
+        if (!font.openFromFile("C:/Windows/Fonts/arial.ttf") &&
+            !font.openFromFile("C:/Windows/Fonts/segoeui.ttf") &&
+            !font.openFromFile("/System/Library/Fonts/Supplemental/Arial.ttf") &&
+            !font.openFromFile("/System/Library/Fonts/SFNS.ttf")) {
             return 1;
         }
     }
 
-    sf::Font sciFiFont;
-    bool hasSciFiFont = sciFiFont.openFromFile("assets/orbitron.ttf");
-
-    const sf::Font& displayFont = hasSciFiFont ? sciFiFont : font;
+    const sf::Font& displayFont = font;
 
     sf::Text playText(displayFont);
     playText.setString("PLAY");
